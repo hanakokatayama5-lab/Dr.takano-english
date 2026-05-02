@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高野先生 英会話スキット学習 | English Recovery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --gradient: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .card-subtitle {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h2 { margin-bottom: 1.5rem; font-size: 1.5rem; }
+
+        .script-block {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .translation-block {
+            color: var(--secondary);
+            font-size: 0.95rem;
+            padding: 1rem;
+            background: #fff;
+            border: 1px dashed var(--border);
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th { background: #f8fafc; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; }
+
+        .audio-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 1rem;
+            align-items: center;
+        }
+
+        .audio-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .audio-btn:hover { border-color: var(--primary); background: var(--primary-light); }
+        .audio-btn.playing { background: var(--primary); color: white; animation: pulse 2s infinite; }
+        .stop-btn { background: #fee2e2; color: #b91c1c; }
+
+        .substitution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .sub-card {
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+            border-radius: 1rem;
+        }
+
+        .sub-card h3 {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sub-list { list-style: none; }
+        .sub-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        .sub-list li strong { color: var(--text-main); }
+        .sub-list li span { color: var(--text-muted); font-size: 0.8rem; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+        @media print {
+            .audio-controls, .print-btn { display: none; }
+            body { background: white; padding: 0; }
+            .card { box-shadow: none; border: 1px solid #eee; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>英会話スキット学習</h1>
+            <p>実践的なやり取りと入れ替え練習</p>
+        </header>
+
+        <!-- Section 1: Clean Example -->
+        <section id="example" class="card">
+            <span class="card-subtitle">Clean Example</span>
+            <h2>1. 基本の会話例</h2>
+            
+            <div class="audio-controls" data-text="What seems to be the problem today? My lower back hurts. I see. Try not to sit for too long. Please move around a little during the day. Okay. Please do some light stretching at home. If the pain gets worse, please come back. Thank you.">
+                <button class="audio-btn" onclick="playAudio(this, 'normal')">全文再生</button>
+                <button class="audio-btn" onclick="playAudio(this, 'sentence')">リピート用</button>
+                <button class="audio-btn stop-btn" onclick="stopAudio()">停止</button>
+            </div>
+
+            <div class="script-block">
+                <p><strong>Staff:</strong> What seems to be the problem today?<br>
+                <strong>Patient:</strong> My lower back hurts.<br>
+                <strong>Staff:</strong> I see. Try not to sit for too long. Please move around a little during the day.<br>
+                <strong>Patient:</strong> Okay.<br>
+                <strong>Staff:</strong> Please do some light stretching at home. If the pain gets worse, please come back.<br>
+                <strong>Patient:</strong> Thank you.</p>
+            </div>
+
+            <div class="translation-block">
+                今日どうされましたか？ / 腰が痛いんです。 / なるほど。長時間座りすぎないようにしてください。日中は少し体を動かしてください。 / 分かりました。 / 家で軽いストレッチをしてください。もし痛みがひどくなるようなら、また来てください。 / ありがとうございます。
+            </div>
+        </section>
+
+        <!-- Section 2: Slash Reading -->
+        <section id="slash" class="card">
+            <span class="card-subtitle">Structure</span>
+            <h2>2. スラッシュリーディング</h2>
+            <div class="audio-controls" id="slash-audio-trigger">
+                <button class="audio-btn" onclick="playSlashAudio()">スラッシュ再生</button>
+                <button class="audio-btn stop-btn" onclick="stopAudio()">停止</button>
+            </div>
+            <table>
+                <thead>
+                    <tr><th>英文 (English)</th><th>和訳 (Japanese)</th></tr>
+                </thead>
+                <tbody id="slash-table-body">
+                    <tr><td>What seems to be / the problem / today? /</td><td>今日はどうされましたか？</td></tr>
+                    <tr><td>My lower back / hurts. /</td><td>腰が痛いんです。</td></tr>
+                    <tr><td>I see. / Try not to / sit for too long. /</td><td>なるほど。 / 〜しないでください / 長時間座りすぎる。</td></tr>
+                    <tr><td>Please move around / a little / during the day. /</td><td>日中は / 少し / 体を動かしてください。</td></tr>
+                    <tr><td>Please / do some light stretching / at home. /</td><td>家で / 軽いストレッチを / してください。</td></tr>
+                    <tr><td>If the pain / gets worse, / please come back. /</td><td>もし痛みが / ひどくなるなら / また来てください。</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 3: Template & Word List -->
+        <section id="substitution" class="card">
+            <span class="card-subtitle">Substitution Practice</span>
+            <h2>3. 入れ替え練習用テンプレート</h2>
+            
+            <div class="script-block" style="background: #fffbeb; border-color: var(--accent);">
+                <p><strong>Staff:</strong> What seems to be the problem today?<br>
+                <strong>Patient:</strong> My <strong>【1. 痛い場所】</strong> hurts.<br>
+                <strong>Staff:</strong> I see. Try not to <strong>【2. 気をつけること】</strong>. Please move around a little during the day.<br>
+                <strong>Patient:</strong> Okay.<br>
+                <strong>Staff:</strong> Please <strong>【3. 家での対応】</strong> at home. If the pain gets worse, please come back.<br>
+                <strong>Patient:</strong> Thank you.</p>
+            </div>
+
+            <div class="substitution-grid">
+                <div class="sub-card">
+                    <h3>1. 痛い場所</h3>
+                    <ul class="sub-list">
+                        <li><strong>lower back</strong> <span>(腰)</span></li>
+                        <li><strong>shoulder</strong> <span>(肩)</span></li>
+                        <li><strong>neck</strong> <span>(首)</span></li>
+                    </ul>
+                </div>
+                <div class="sub-card">
+                    <h3>2. 気をつけること</h3>
+                    <ul class="sub-list">
+                        <li><strong>sit for too long</strong> <span>(長時間座りすぎる)</span></li>
+                        <li><strong>lift heavy things</strong> <span>(重いものを持つ)</span></li>
+                        <li><strong>use your phone for too long</strong> <span>(スマホ長時間使用)</span></li>
+                    </ul>
+                </div>
+                <div class="sub-card">
+                    <h3>3. 家での対応</h3>
+                    <ul class="sub-list">
+                        <li><strong>do some light stretching</strong> <span>(ストレッチ)</span></li>
+                        <li><strong>rest</strong> <span>(安静)</span></li>
+                        <li><strong>ice the area</strong> <span>(冷やす)</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const synth = window.speechSynthesis;
+        let isSpeaking = false;
+
+        function stopAudio() {
+            synth.cancel();
+            isSpeaking = false;
+            document.querySelectorAll('.audio-btn').forEach(btn => btn.classList.remove('playing'));
+        }
+
+        function playAudio(btn, mode) {
+            stopAudio();
+            const text = btn.parentElement.getAttribute('data-text');
+            btn.classList.add('playing');
+            speak(text, mode, () => btn.classList.remove('playing'));
+        }
+
+        function playSlashAudio() {
+            const btn = document.querySelector('#slash-audio-trigger .audio-btn');
+            stopAudio();
+            btn.classList.add('playing');
+            
+            const rows = document.querySelectorAll('#slash-table-body tr');
+            const text = Array.from(rows).map(r => r.cells[0].innerText).join(' ');
+            speak(text, 'slash', () => btn.classList.remove('playing'));
+        }
+
+        function speak(text, mode, onEnd) {
+            isSpeaking = true;
+            let parts = [];
+            if (mode === 'sentence') {
+                parts = text.match(/[^.!?]+[.!?]+/g) || [text];
+            } else if (mode === 'slash') {
+                parts = text.split('/').map(p => p.trim()).filter(p => p.length > 0);
+            } else {
+                parts = [text];
+            }
+
+            let index = 0;
+            const speakNext = () => {
+                if (index >= parts.length || !isSpeaking) {
+                    isSpeaking = false;
+                    onEnd();
+                    return;
+                }
+
+                const utterance = new SpeechSynthesisUtterance(parts[index]);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                utterance.onend = () => {
+                    index++;
+                    const pause = mode === 'sentence' ? 2000 : (mode === 'slash' ? 1500 : 0);
+                    setTimeout(speakNext, pause);
+                };
+                synth.speak(utterance);
+            };
+            speakNext();
+        }
+    </script>
+</body>
+</html>
