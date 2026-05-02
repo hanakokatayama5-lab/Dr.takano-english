@@ -18,6 +18,7 @@
             --text-main: #1e293b;
             --accent: #f59e0b;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Outfit', 'Noto Sans JP', sans-serif;
@@ -26,187 +27,443 @@
             display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; padding: 1rem;
         }
+
         h1 { margin-bottom: 0.2rem; color: var(--primary); font-size: 1.5rem; }
         .subtitle { margin-bottom: 1rem; color: #64748b; font-size: 0.8rem; }
+
         #welcome-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(37, 99, 235, 0.98); color: white;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             z-index: 1000; padding: 2rem; text-align: center; transition: opacity 0.5s ease;
         }
+
         .header-controls {
             width: 100%; max-width: 450px; background: white; padding: 1rem;
             border-radius: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 1rem;
         }
+
         .stats {
             display: flex; justify-content: space-around; margin-bottom: 0.75rem;
             font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;
         }
         .stat-val { display: block; font-size: 1.2rem; color: var(--primary); }
         .stat-val.done { color: var(--success); }
+
         .filters { display: flex; gap: 0.5rem; flex-direction: column; }
         select { 
             padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; 
             font-size: 0.85rem; background-color: #f8fafc; font-family: inherit;
         }
+
         .card-container {
             perspective: 1000px; width: 100%; max-width: 400px; height: 280px;
             margin-bottom: 1.5rem; position: relative;
         }
+
         .card {
-            width: 100%; height: 100%; position: relative;
-            transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer;
+            position: relative; width: 100%; height: 100%; transition: transform 0.6s;
+            transform-style: preserve-3d; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border-radius: 1.5rem;
+            cursor: pointer;
         }
-        .card.is-flipped { transform: rotateY(180deg); }
-        .card-front, .card-back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 2rem;
-            border-radius: 1.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            text-align: center;
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 1.5rem; border-radius: 1.5rem; border: 2px solid #fff;
         }
-        .card-front { background: var(--card-front); color: var(--text-main); }
-        .card-back { background: var(--card-back); color: var(--primary); transform: rotateY(180deg); }
-        .word-en { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary); }
-        .word-ja { font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
-        .phrase { font-size: 1rem; color: #475569; line-height: 1.4; font-style: italic; }
+        .card-front { background-color: var(--card-front); }
+        .card-back { background-color: var(--card-back); transform: rotateY(180deg); }
+
+        .word-en { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; text-align: center; line-height: 1.1; }
+        .word-jp { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-align: center; }
+        .word-pos { font-size: 0.75rem; color: #64748b; background: #e2e8f0; padding: 0.2rem 0.5rem; border-radius: 0.3rem; margin-bottom: 0.5rem; }
+        .phrase { font-size: 0.85rem; color: #475569; font-style: italic; margin-top: 1rem; line-height: 1.4; text-align: center; }
+
         .speaker-btn {
-            position: absolute; bottom: 1rem; right: 1rem;
-            width: 44px; height: 44px; border-radius: 50%;
-            background: white; border: 1px solid #e2e8f0;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 10; transition: transform 0.1s;
+            position: absolute; bottom: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255,255,255,0.8); border: 1px solid #ddd;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        #autoplay-btn {
-            margin-top: 0.5rem; padding: 0.75rem; border-radius: 0.75rem;
-            border: none; background: var(--accent); color: white;
-            font-weight: 700; cursor: pointer; font-size: 0.9rem;
-            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        .speaker-btn:active { transform: scale(0.9); }
+
+        .action-btns { display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-bottom: 1rem; }
+        .btn { padding: 1rem; border-radius: 1rem; border: none; color: white; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+        .btn-start { background: white; color: var(--primary); padding: 1rem 2.5rem; font-size: 1.1rem; }
+        .btn-done { background: var(--success); flex: 1; }
+        .btn-yet { background: var(--danger); flex: 1; }
+
+        .autoplay-bar {
+            width: 100%; max-width: 400px; background: #fee2e2; border: 1px solid #fca5a5;
+            padding: 0.75rem; border-radius: 1rem; margin-bottom: 1rem; display: none;
+            justify-content: space-between; align-items: center;
         }
-        #autoplay-btn.active { background: var(--danger); animation: pulse 2s infinite; }
-        .nav-btns { display: flex; gap: 1rem; width: 100%; max-width: 400px; }
-        .btn {
-            flex: 1; padding: 1rem; border-radius: 1rem; border: none;
-            font-weight: 700; font-size: 1rem; cursor: pointer;
-            transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-        }
-        .btn-prev { background: white; color: #64748b; border: 1px solid #e2e8f0; }
-        .btn-next { background: var(--primary); color: white; box-shadow: 0 4px 6px -1px rgba(37,99,235,0.2); }
+        .autoplay-controls { display: flex; gap: 0.5rem; width: 100%; max-width: 400px; margin-bottom: 1rem; }
+        .btn-auto { background: var(--accent); flex: 1; color: var(--text-main); font-size: 0.9rem; }
+
+        .nav-controls { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
+        .btn-nav { padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; background: white; cursor: pointer; font-size: 0.85rem; color: #64748b; }
+        .counter { font-size: 0.85rem; color: #64748b; font-weight: 700; }
+
+        .status-badge { position: absolute; top: 1rem; right: 1rem; padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.7rem; font-weight: 700; }
+        .status-done { background: #dcfce7; color: #166534; }
+        .status-yet { background: #fee2e2; color: #991b1b; }
+
+        .sliding { animation: slideNext 0.15s forwards; }
+        @keyframes slideNext { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-50px); opacity: 0; } }
+        .reset-btn { font-size: 0.7rem; color: #cbd5e1; cursor: pointer; margin-top: 1rem; text-decoration: underline; }
     </style>
 </head>
 <body>
+
     <div id="welcome-overlay">
-        <h1 style="color: white; font-size: 2rem;">Ready to Study?</h1>
-        <p style="margin-bottom: 2rem; opacity: 0.9;">スピーカーボタンや聞き流し機能が使えます</p>
-        <button class="btn btn-next" style="max-width: 250px; background: white; color: var(--primary);" onclick="startApp()">学習を始める</button>
+        <h2>Dr. Takano-English</h2>
+        <p>単語帳アプリを起動します</p>
+        <button class="btn btn-start" onclick="startApp()">学習を始める</button>
     </div>
+
     <h1>Word Master</h1>
+    <p class="subtitle">高野先生専用：英単語アプリ</p>
+
+    <div id="autoplay-bar" class="autoplay-bar">
+        <span style="font-size: 0.85rem; font-weight: 700; color: #991b1b;">🔊 聞き流し再生中...</span>
+        <button onclick="stopAutoplay()" style="background:var(--danger); color:white; border:none; padding:0.3rem 0.8rem; border-radius:0.5rem; cursor:pointer">停止</button>
+    </div>
+
     <div class="header-controls">
         <div class="stats">
-            <div>PROGRESS <span id="stat-progress" class="stat-val">0/0</span></div>
-            <div>MASTERED <span id="stat-mastered" class="stat-val done">0</span></div>
+            <div class="stat-item"><span class="stat-val" id="total-stat">0</span>全単語</div>
+            <div class="stat-item"><span class="stat-val done" id="done-stat">0</span>覚えた</div>
+            <div class="stat-item"><span class="stat-val" id="yet-stat" style="color:var(--danger)">0</span>未習得</div>
         </div>
         <div class="filters">
-            <select id="filter-category" onchange="applyFilters()">
+            <select id="view-mode" onchange="filterWords()">
+                <option value="all">すべての単語を練習</option>
+                <option value="unlearned">未習得（まだ）のみを表示</option>
+                <option value="learned">習得済みのみを表示</option>
+            </select>
+            <select id="category-filter" onchange="filterWords()">
                 <option value="all">すべてのカテゴリー</option>
-                <option value="greeting">挨拶・基本</option>
-                <option value="body">部位・症状</option>
-                <option value="action">動作・指示</option>
             </select>
-            <select id="filter-status" onchange="applyFilters()">
-                <option value="all">すべての単語</option>
-                <option value="unlearned">未習得のみ</option>
-            </select>
-            <button id="autoplay-btn" onclick="toggleAutoplay()">▶ 連続再生（聞き流し）を開始</button>
         </div>
     </div>
-    <div class="card-container">
-        <div class="card" id="card" onclick="flipCard()">
-            <div class="card-front">
-                <div class="word-en" id="display-en">Loading...</div>
-                <button class="speaker-btn" onclick="event.stopPropagation(); speakCurrentSide()">🔊</button>
+
+    <div class="card-container" id="card-trigger">
+        <div class="speaker-btn" onclick="manualSpeak(event)">🔊</div>
+        <div id="card" class="card" onclick="flipCard()">
+            <div class="card-face card-front">
+                <div id="status-badge" class="status-badge"></div>
+                <div id="front-en" class="word-en">Loading...</div>
+                <div style="font-size: 0.8rem; color: #cbd5e1;">Tap to Flip</div>
             </div>
-            <div class="card-back">
-                <div class="word-ja" id="display-ja">...</div>
-                <div class="phrase" id="display-phrase">...</div>
-                <button class="speaker-btn" onclick="event.stopPropagation(); speakCurrentSide()">🔊</button>
+            <div class="card-face card-back">
+                <div id="back-pos" class="word-pos">品詞</div>
+                <div id="back-jp" class="word-jp">意味</div>
+                <div id="back-phrase" class="phrase">フレーズ</div>
             </div>
         </div>
     </div>
-    <div class="nav-btns">
-        <button class="btn btn-prev" onclick="prevCard()">PREV</button>
-        <button class="btn btn-next" onclick="nextCard()">NEXT</button>
+
+    <div class="autoplay-controls">
+        <button class="btn btn-auto" id="btn-autoplay" onclick="startAutoplay()">🎧 連続再生を開始</button>
     </div>
+
+    <div class="action-btns">
+        <button class="btn btn-yet" onclick="markAs('yet')">まだ ❌</button>
+        <button class="btn btn-done" onclick="markAs('done')">覚えた！ ✅</button>
+    </div>
+
+    <div class="nav-controls">
+        <button class="btn-nav" onclick="prevCard()">前へ</button>
+        <div id="counter" class="counter">0 / 0</div>
+        <button class="btn-nav" onclick="nextCard()">次へ</button>
+        <button class="btn-nav" onclick="shuffleCards()">🔀</button>
+    </div>
+
+    <div class="reset-btn" onclick="resetProgress()">習得記録をリセット</div>
+
     <script>
-        const words = [
-            { id: 1, en: "Lower back", ja: "腰", phrase: "Does your lower back hurt?", category: "body" },
-            { id: 2, en: "Shoulder", ja: "肩", phrase: "Relax your shoulders, please.", category: "body" },
-            { id: 3, en: "Inhale", ja: "息を吸う", phrase: "Inhale deeply through your nose.", category: "action" },
-            { id: 4, en: "Exhale", ja: "息を吐く", phrase: "Exhale slowly through your mouth.", category: "action" },
-            { id: 5, en: "Stiff", ja: "凝っている / 硬い", phrase: "Your muscles are very stiff.", category: "body" },
-            { id: 6, en: "Lie down", ja: "横になる", phrase: "Please lie down on your stomach.", category: "action" },
-            { id: 7, en: "Face up", ja: "仰向け", phrase: "Please turn over and face up.", category: "action" },
-            { id: 8, en: "Dizzy", ja: "めまいがする", phrase: "Do you feel dizzy?", category: "body" },
-            { id: 9, en: "Better", ja: "良くなった", phrase: "I hope you feel better soon.", category: "greeting" },
-            { id: 10, en: "Numbness", ja: "しびれ", phrase: "Do you have any numbness in your legs?", category: "body" }
-        ];
-        let currentWords = [...words];
-        let currentIndex = 0;
-        let isFlipped = false;
-        let masteredIds = [];
-        let isAutoplay = false;
-        let autoplayTimer = null;
+        const masterData = `施術フレーズ	insert	挿入する、刺す	動	Can I insert needles?
+施術フレーズ	needles	鍼、針	名	Can I insert needles?
+施術フレーズ	tension	緊張、筋肉の張り	名	Release the tension.
+施術フレーズ	release	抜く、解き放つ	動	Release the tension.
+施術フレーズ	joint	関節	名	I’ll move this joint.
+施術フレーズ	stomach	お腹、胃	名	Could you lie on your stomach?
+1 自己紹介A	job	仕事	名	I have a full-time job.
+1 自己紹介A	big cities	大都市	名	I like living in big cities.
+1 自己紹介A	outgoing	社交的な	形	I am a pretty outgoing person.
+1 自己紹介A	originally from ~	もともと〜出身	句	I'm originally from Osaka.
+1 自己紹介A	in the future	将来	句	I want to travel more in the future.
+1 自己紹介A	hobbies	趣味	名	My hobbies are golf and tennis.
+1 自己紹介A	going out drinking	飲みに行く	句	I like going out drinking with my friends.
+1 自己紹介A	anything you want	あなたが欲しいものは何でも	句	You can find anything you want here.
+1 自己紹介A	married	結婚している	形	I'm married and have two kids.
+1 自己紹介A	children	子どもたち	名	We don't have any children yet.
+1 自己紹介A	person	人	名	He is a very nice person.
+1 自己紹介A	work for a bank	銀行で働く	句	I work for a bank in Tokyo.
+1 自己紹介A	though	～だけれども	接	It's expensive, though.
+4 健康B	in good health	健康で	句	My parents are in good health.
+4 健康B	healthy	健康な	形	I try to eat healthy food.
+4 健康B	bad habits	悪い習慣	名	I want to quit my bad habits.
+4 健康B	smoke	たばこを吸う	動	I don't smoke anymore.
+4 健康B	usually	たいてい、ふだんは	副	I usually go to bed at 11.
+4 健康B	prefer to	〜するほうを好む	句	I prefer to walk rather than take a bus.
+4 健康B	rather than	〜よりむしろ	句	I prefer tea rather than coffee.
+4 健康B	diet	食生活、食事	名	I need to improve my diet.
+4 健康B	skip lunch	昼食を抜く	句	I sometimes skip lunch when I'm busy.
+4 健康B	skip dinner	夕食を抜く	句	It's not good to skip dinner.
+4 健康B	for some reason	なぜか	句	For some reason, I feel tired today.
+4 健康B	seem to	〜のように思われる	句	You seem to be tired.
+4 健康B	get sick	病気になる	句	I don't get sick very often.
+4 健康B	overweight	太りすぎの	形	I'm a little overweight these days.
+4 健康B	be healthy	健康でいる	句	It's important to be healthy.
+4 健康B	exercise	運動する、運動	動	I exercise three times a week.
+4 健康B	a night	一晩に	句	I sleep 7 hours a night.
+4 健康B	still	まだ	副	I am still working.
+9 食べ物	many kinds of	いろいろな種類の	句	There are many kinds of food.
+9 食べ物	in fact	実は	句	In fact, I've never been there.
+9 食べ物	difficult	難しい	形	It's difficult for me to say.
+9 食べ物	favorite	いちばん好きな	形	What is your favorite food?
+9 食べ物	Western food	洋食	名	I like Western food like steak.
+9 食べ物	sweet	甘い	形	I like sweet things.
+9 食べ物	salty	塩辛い	形	This soup is a little salty.
+9 食べ物	spicy	香辛料のきいた	形	I love spicy food.
+9 食べ物	appetite	食欲	名	I have a big appetite.
+9 食べ物	at one time	一度に	句	I can't do many things at one time.
+9 食べ物	tendency	傾向	名	He has a tendency to talk too much.
+9 食べ物	have a tendency to	〜する傾向がある	句	I have a tendency to gain weight.
+9 食べ物	gain weight	体重が増える	句	I tend to gain weight in winter.
+9 食べ物	skip breakfast	朝食を抜く	句	I never skip breakfast.
+11 コーヒーA	first thing in the morning	朝起きてすぐに	句	I drink water first thing in the morning.
+11 コーヒーA	get to work	職場に着く	句	I get to work at 9 AM.
+11 コーヒーA	during the rest of the day	その日の残りの間ずっと	句	I stay busy during the rest of the day.
+11 コーヒーA	have trouble falling asleep	寝つきが悪い	句	I have trouble falling asleep at night.
+11 コーヒーA	fall asleep	寝つく	動	I fell asleep on the train.
+11 コーヒーA	as much as	〜だけたくさん	句	I eat as much as I want.
+11 コーヒーA	prefer	より好む	動	I prefer tea.
+11 コーヒーA	blend	ブレンド、混合	名	This is a special blend of coffee.
+11 コーヒーA	freshly ground coffee	挽きたてのコーヒー	名	Nothing beats freshly ground coffee.
+11 コーヒーA	not only A but also B	AだけでなくBも	句	He is not only smart but also kind.
+11 コーヒーA	aroma	香り	名	I love the aroma of coffee.
+11 コーヒーA	hide	隠す	動	Don't hide your feelings.
+11 コーヒーA	the real taste	本当の味	名	I want to know the real taste of it.
+11 コーヒーB	in other words	言い換えると	句	He is lazy, in other words, he doesn't work.
+11 コーヒーB	have become	〜になっている	動	It has become very cold.
+11 コーヒーB	for the past three years	この3年間ずっと	句	I've lived here for the past three years.
+11 コーヒーB	commute	通勤する	動	I commute to Tokyo every day.
+11 コーヒーB	in many ways	いろいろな意味で	句	This is helpful in many ways.
+11 コーヒーB	cluttered	散らかった	形	My room is always cluttered.
+11 コーヒーB	mobile office	移動式のオフィス	名	My car is my mobile office.
+11 コーヒーB	however	しかしながら	副	However, we have a problem.
+11 コーヒーB	stay in the same shop	同じ店に居続ける	句	Don't stay in the same shop for too long.
+11 コーヒーB	for a long time	長い間	句	I've been waiting for a long time.
+11 コーヒーB	move around	あちこち移動する	句	I like to move around while working.
+11 コーヒーB	a number of	いくつもの、多くの	句	There are a number of reasons.
+11 コーヒーB	owners	店主たち	名	The shop owners are very kind.
+11 コーヒーB	get to know	だんだん知るようになる	句	I got to know her through work.
+11 コーヒーB	regular customers	常連客	名	We have many regular customers.
+11 コーヒーB	make friends with	〜と親しくなる	句	I made friends with him in college.
+17 旅行A	traveling	旅行すること	名	Traveling is my passion.
+17 旅行A	whenever	～するときはいつでも	接	Whenever I'm free, I read books.
+17 旅行A	whenever I have the chance	機会があるときはいつでも	句	I go to Kyoto whenever I have the chance.
+17 旅行A	of course	もちろん	副	Of course, I'll help you.
+17 旅行A	a little expensive	少し高い	形	It's a little expensive for me.
+17 旅行A	take trips	旅行に行く	句	I take trips every summer.
+17 旅行A	all the time	いつも	句	She talks all the time.
+17 旅行A	every month	毎月	副	I buy a new book every month.
+17 旅行A	a short trip	短い旅行	名	I took a short trip to Osaka.
+17 旅行A	somewhere new	どこか新しい場所	句	I want to go somewhere new.
+17 旅行A	once a year	年に1回	副	I travel once a year.
+17 旅行A	overseas	海外へ	副	I want to live overseas.
+17 旅行A	broaden your horizons	視野を広げる	句	Reading broadens your horizons.
+17 旅行A	the horizon	地平線	名	The sun is below the horizon.
+17 旅行A	so far	これまでのところ	副	So far, everything is fine.
+17 旅行A	visit	訪れる	動	I visited London last year.
+17 旅行A	perhaps	たぶん、ひょっとすると	副	Perhaps it's true.
+17 旅行A	seem like 〜	〜のように思える	句	It seems like a good idea.
+17 旅行A	place	場所	名	This is a nice place.
+24 スポーツA	enjoy watching	見るのを楽しむ	句	I enjoy watching baseball.
+24 スポーツA	particularly	特に	副	I like fruits, particularly apples.
+24 スポーツA	any sport	どんなスポーツでも	句	I can play any sport.
+24 スポーツA	at home	家で	副	I like staying at home.
+24 スポーツA	a nice way to relax	くつろぐのによい方法	句	Yoga is a nice way to relax.
+24 スポーツA	going out to see	見に出かけること	句	I like going out to see movies.
+24 スポーツA	tournament	トーナメント	名	I won the tennis tournament.
+24 スポーツA	halfway	中途半端な	形	Don't do things halfway.
+24 スポーツA	either A or B	AかBのどちらか	句	You can have either coffee or tea.
+24 スポーツA	win or lose	勝つか負けるか	句	It's not about win or lose.
+24 スポーツA	excuse	言い訳	名	Don't make an excuse.
+24 スポーツA	compromise	妥協	名	We need to reach a compromise.
+24 スポーツA	the rest of my life	私の人生の残りの部分	句	I want to live here for the rest of my life.
+24 スポーツA	have to	〜しなければならない	助	I have to go now.
+24 スポーツA	deal with	対処する	句	I have to deal with this problem.
+24 スポーツA	a lot of nonsense	たくさんのくだらないこと	名	That's a lot of nonsense.
+24 スポーツA	a release	発散、気晴らし	名	Running is a great release for me.
+26 仕事	reasons why	〜する理由	句	There are several reasons why I'm late.
+26 仕事	get along well with ~	~と仲良くやっていく	句	I get along well with my boss.
+26 仕事	co-workers	同僚	名	My co-workers are very helpful.
+26 仕事	through my job	仕事を通して	句	I met my husband through my job.
+26 仕事	get to travel	旅行する機会がある	句	I get to travel a lot for work.
+26 仕事	many different places	いろいろな場所	句	I've lived in many different places.
+26 仕事	salesperson	営業担当者	名	He is a top salesperson.
+26 仕事	company	会社	名	I work for a big company.
+26 仕事	products	製品、商品	名	We sell electronic products.
+26 仕事	feel comfortable in	〜に心地よさを感じる	句	I feel comfortable in my current role.
+26 仕事	feel	感じる	動	I feel happy.
+26 仕事	comfortable	心地よい	形	This chair is very comfortable.
+26 仕事	role as	〜としての役割	句	My role as a manager is difficult.
+26 仕事	believe in	〜を信じる	句	I believe in you.
+26 仕事	benefits	福利厚生、手当	名	The company has good benefits.
+26 仕事	pretty well	かなりよく	副	I know him pretty well.
+26 仕事	pay me well	給料がよい	句	They pay me well for my work.
+26 仕事	complain about ～	～について文句を言う	句	Don't complain about the weather.
+26 仕事	have nothing to complain about	文句を言うことが何もない	句	I have nothing to complain about.
+26 仕事	finally	最後に	副	Finally, the rain stopped.`;
+
+        let allWords = []; let displayWords = []; let progress = {}; let currentIndex = 0;
+        const synth = window.speechSynthesis;
+        let isAutoplay = false; let audioEnabled = false;
+
         function startApp() {
-            document.getElementById('welcome-overlay').style.display = 'none';
-            init();
+            synth.speak(new SpeechSynthesisUtterance("")); audioEnabled = true;
+            document.getElementById('welcome-overlay').style.opacity = '0';
+            setTimeout(() => { document.getElementById('welcome-overlay').style.display = 'none'; showCard(); }, 500);
         }
-        function init() { showCard(); updateStats(); }
+
+        function init() {
+            const saved = localStorage.getItem('takano_word_progress');
+            if (saved) progress = JSON.parse(saved);
+            processData(masterData);
+        }
+
+        function processData(text) {
+            const lines = text.split('\n');
+            allWords = lines.map(line => {
+                const cols = line.split('\t');
+                let en = (cols[1]||'').trim();
+                // Forced lowercase if not starting with ~ or specific acronyms
+                if (en && !en.startsWith('~') && !en.startsWith("I'm")) {
+                    en = en.charAt(0).toLowerCase() + en.slice(1);
+                }
+                return { cat: cols[0], en: en, jp: (cols[2]||'').trim(), pos: (cols[3]||'').trim(), phrase: (cols[4]||'').trim() };
+            }).filter(w => w.en);
+            updateCategoryFilter(); filterWords();
+        }
+
+        function updateCategoryFilter() {
+            const select = document.getElementById('category-filter');
+            const cats = [...new Set(allWords.map(w => w.cat))];
+            select.innerHTML = '<option value="all">すべてのカテゴリー</option>';
+            cats.forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.textContent = c; select.appendChild(opt); });
+        }
+
+        function filterWords() {
+            const mode = document.getElementById('view-mode').value;
+            const cat = document.getElementById('category-filter').value;
+            displayWords = allWords.filter(w => {
+                const isCat = (cat === 'all' || w.cat === cat);
+                const status = progress[w.en] || 'uncheck';
+                let isMode = true;
+                if (mode === 'unlearned') isMode = (status !== 'done');
+                if (mode === 'learned') isMode = (status === 'done');
+                return isCat && isMode;
+            });
+            currentIndex = 0; updateStats(); showCard();
+        }
+
+        function updateStats() {
+            const total = allWords.length;
+            let done = 0; allWords.forEach(w => { if (progress[w.en] === 'done') done++; });
+            document.getElementById('total-stat').textContent = total;
+            document.getElementById('done-stat').textContent = done;
+            document.getElementById('yet-stat').textContent = total - done;
+        }
+
         function showCard() {
-            const word = currentWords[currentIndex];
-            document.getElementById('display-en').innerText = word.en;
-            document.getElementById('display-ja').innerText = word.ja;
-            document.getElementById('display-phrase').innerText = word.phrase;
-            document.getElementById('card').classList.remove('is-flipped');
-            isFlipped = false;
+            const card = document.getElementById('card');
+            card.classList.remove('flipped', 'sliding');
+            if (displayWords.length === 0) {
+                document.getElementById('front-en').textContent = "該当なし";
+                document.getElementById('counter').textContent = "0 / 0";
+                return;
+            }
+            const w = displayWords[currentIndex];
+            document.getElementById('front-en').textContent = w.en;
+            document.getElementById('back-jp').textContent = w.jp;
+            document.getElementById('back-pos').textContent = w.pos || '---';
+            document.getElementById('back-phrase').textContent = w.phrase || '';
+            document.getElementById('counter').textContent = `${currentIndex + 1} / ${displayWords.length}`;
+            
+            const badge = document.getElementById('status-badge');
+            const status = progress[w.en];
+            if (status === 'done') { badge.textContent = "習得済み ✅"; badge.className = "status-badge status-done"; }
+            else if (status === 'yet') { badge.textContent = "要復習 ❌"; badge.className = "status-badge status-yet"; }
+            else { badge.textContent = ""; }
         }
-        function flipCard() { isFlipped = !isFlipped; document.getElementById('card').classList.toggle('is-flipped', isFlipped); }
-        function nextCard() { currentIndex = (currentIndex + 1) % currentWords.length; showCard(); }
-        function prevCard() { currentIndex = (currentIndex - 1 + currentWords.length) % currentWords.length; showCard(); }
-        function updateStats() { document.getElementById('stat-progress').innerText = (currentIndex + 1) + '/' + currentWords.length; }
-        function speakText(text, lang = 'en-US') {
-            const uttr = new SpeechSynthesisUtterance(text);
-            uttr.lang = lang;
-            speechSynthesis.speak(uttr);
+
+        function manualSpeak(event) {
+            if (event) event.stopPropagation();
+            if (!audioEnabled || displayWords.length === 0) return;
+            const w = displayWords[currentIndex];
+            const isFlipped = document.getElementById('card').classList.contains('flipped');
+            if (!isFlipped) speak(w.en, 'en-US'); else speak(w.jp, 'ja-JP');
         }
-        function speakCurrentSide() {
-            const word = currentWords[currentIndex];
-            speakText(isFlipped ? word.ja : word.en, isFlipped ? 'ja-JP' : 'en-US');
-        }
-        function toggleAutoplay() {
-            isAutoplay = !isAutoplay;
-            const btn = document.getElementById('autoplay-btn');
-            btn.innerHTML = isAutoplay ? '⏹ 停止' : '▶ 連続再生';
-            if (isAutoplay) startAutoplayCycle();
-            else clearTimeout(autoplayTimer);
-        }
-        async function startAutoplayCycle() {
+
+        function startAutoplay() { if (displayWords.length === 0) return; isAutoplay = true; document.getElementById('autoplay-bar').style.display = 'flex'; playSequence(); }
+        function stopAutoplay() { isAutoplay = false; synth.cancel(); document.getElementById('autoplay-bar').style.display = 'none'; }
+
+        async function playSequence() {
             if (!isAutoplay) return;
-            const word = currentWords[currentIndex];
-            if (isFlipped) { flipCard(); await new Promise(r => setTimeout(r, 600)); }
-            speakText(word.en, 'en-US');
-            await new Promise(r => setTimeout(r, 3000));
+            const w = displayWords[currentIndex];
+            document.getElementById('card').classList.remove('flipped');
+            await speakAsync(w.en, 'en-US'); await sleep(1000);
             if (!isAutoplay) return;
-            flipCard();
-            speakText(word.ja, 'ja-JP');
-            await new Promise(r => setTimeout(r, 3000));
+            document.getElementById('card').classList.add('flipped');
+            await speakAsync(w.jp, 'ja-JP'); await sleep(1000);
             if (!isAutoplay) return;
-            speakText(word.phrase, 'en-US');
-            await new Promise(r => setTimeout(r, 5000));
+            if (w.phrase) { await speakAsync(w.phrase, 'en-US'); await sleep(2000); }
             if (!isAutoplay) return;
-            nextCard();
-            autoplayTimer = setTimeout(startAutoplayCycle, 1000);
+            if (currentIndex < displayWords.length - 1) { currentIndex++; showCard(); playSequence(); }
+            else { stopAutoplay(); }
         }
+
+        function speakAsync(text, lang) {
+            return new Promise((resolve) => {
+                synth.cancel(); const u = new SpeechSynthesisUtterance(text);
+                u.lang = lang; u.rate = 0.9; u.onend = resolve; synth.speak(u);
+            });
+        }
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+        function speak(text, lang) { synth.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = 0.9; synth.speak(u); }
+
+        function markAs(status) {
+            if (displayWords.length === 0) return;
+            progress[displayWords[currentIndex].en] = status;
+            localStorage.setItem('takano_word_progress', JSON.stringify(progress));
+            updateStats();
+            const trigger = document.getElementById('card-trigger');
+            trigger.classList.add('sliding');
+            setTimeout(() => {
+                const mode = document.getElementById('view-mode').value;
+                if (mode === 'unlearned' && status === 'done') filterWords(); else nextCard();
+                trigger.classList.remove('sliding');
+            }, 150);
+        }
+        function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+        function nextCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex + 1) % displayWords.length; showCard(); }
+        function prevCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex - 1 + displayWords.length) % displayWords.length; showCard(); }
+        function shuffleCards() {
+            for (let i = displayWords.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1)); [displayWords[i], displayWords[j]] = [displayWords[j], displayWords[i]];
+            }
+            currentIndex = 0; showCard();
+        }
+        function resetProgress() { if (confirm("リセットしますか？")) { progress = {}; localStorage.removeItem('takano_word_progress'); updateStats(); filterWords(); } }
+
+        init();
     </script>
 </body>
 </html>
