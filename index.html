@@ -28,40 +28,58 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
-        h1 { margin-bottom: 0.2rem; color: var(--primary); font-size: 1.8rem; }
-        .subtitle { margin-bottom: 1.5rem; color: #64748b; font-size: 0.9rem; }
+        h1 { margin-bottom: 0.2rem; color: var(--primary); font-size: 1.5rem; }
+        .subtitle { margin-bottom: 1rem; color: #64748b; font-size: 0.8rem; }
+
+        /* Welcome Overlay */
+        #welcome-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(37, 99, 235, 0.95);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 2rem;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+        #welcome-overlay h2 { margin-bottom: 1rem; }
+        #welcome-overlay p { margin-bottom: 2rem; opacity: 0.9; font-size: 0.9rem; }
 
         /* Stats & Filters */
         .header-controls {
             width: 100%;
             max-width: 450px;
             background: white;
-            padding: 1.25rem;
-            border-radius: 1.5rem;
+            padding: 1rem;
+            border-radius: 1.25rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .stats {
             display: flex;
             justify-content: space-around;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             font-size: 0.85rem;
             font-weight: 700;
             border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 1rem;
+            padding-bottom: 0.75rem;
         }
         .stat-item { text-align: center; }
-        .stat-val { display: block; font-size: 1.4rem; color: var(--primary); }
+        .stat-val { display: block; font-size: 1.2rem; color: var(--primary); }
         .stat-val.done { color: var(--success); }
 
-        .filters { display: flex; gap: 0.75rem; flex-direction: column; }
+        .filters { display: flex; gap: 0.5rem; flex-direction: column; }
         select { 
-            padding: 0.6rem; 
-            border-radius: 0.75rem; 
+            padding: 0.5rem; 
+            border-radius: 0.5rem; 
             border: 1px solid #e2e8f0; 
             font-size: 0.85rem; 
             background-color: #f8fafc;
@@ -73,7 +91,7 @@
             perspective: 1000px;
             width: 100%;
             max-width: 400px;
-            height: 300px;
+            height: 280px;
             cursor: pointer;
             margin-bottom: 1.5rem;
         }
@@ -84,8 +102,8 @@
             height: 100%;
             transition: transform 0.6s;
             transform-style: preserve-3d;
-            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
-            border-radius: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            border-radius: 1.5rem;
         }
 
         .card.flipped { transform: rotateY(180deg); }
@@ -99,18 +117,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
-            border-radius: 2rem;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
             border: 2px solid #fff;
         }
 
         .card-front { background-color: var(--card-front); }
         .card-back { background-color: var(--card-back); transform: rotateY(180deg); }
 
-        .word-en { font-size: 2.4rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; text-align: center; line-height: 1.1; }
-        .word-jp { font-size: 1.6rem; font-weight: 700; color: var(--text-main); text-align: center; }
-        .word-pos { font-size: 0.8rem; color: #64748b; background: #e2e8f0; padding: 0.2rem 0.6rem; border-radius: 0.4rem; margin-bottom: 0.75rem; }
-        .phrase { font-size: 0.95rem; color: #475569; font-style: italic; margin-top: 1.5rem; line-height: 1.4; text-align: center; }
+        .word-en { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; text-align: center; line-height: 1.1; }
+        .word-jp { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-align: center; }
+        .word-pos { font-size: 0.75rem; color: #64748b; background: #e2e8f0; padding: 0.2rem 0.5rem; border-radius: 0.3rem; margin-bottom: 0.5rem; }
+        .phrase { font-size: 0.85rem; color: #475569; font-style: italic; margin-top: 1rem; line-height: 1.4; text-align: center; }
 
         /* Learning Buttons */
         .action-btns {
@@ -118,51 +136,45 @@
             gap: 1rem;
             width: 100%;
             max-width: 400px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .btn-learn {
-            flex: 1;
-            padding: 1.25rem;
-            border-radius: 1.25rem;
+        .btn {
+            padding: 1rem;
+            border-radius: 1rem;
             border: none;
             color: white;
             font-weight: 700;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.3rem;
             transition: all 0.2s;
+            font-family: inherit;
         }
-        .btn-learn:hover { opacity: 0.9; transform: translateY(-2px); }
-        .btn-learn:active { transform: scale(0.95); }
-        .btn-done { background: var(--success); box-shadow: 0 4px 14px 0 rgba(34, 197, 94, 0.39); }
-        .btn-yet { background: var(--danger); box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39); }
-        .btn-learn span { font-size: 0.75rem; opacity: 0.8; font-weight: 400; }
+        .btn:active { transform: scale(0.95); }
+
+        .btn-start { background: white; color: var(--primary); padding: 1rem 2.5rem; font-size: 1.1rem; }
+        .btn-done { background: var(--success); flex: 1; }
+        .btn-yet { background: var(--danger); flex: 1; }
 
         /* Navigation Controls */
-        .nav-controls { display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; }
+        .nav-controls { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
         .btn-nav { 
-            padding: 0.6rem 1.2rem; 
-            border-radius: 0.75rem; 
+            padding: 0.5rem 1rem; 
+            border-radius: 0.5rem; 
             border: 1px solid #e2e8f0; 
             background: white; 
             cursor: pointer; 
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.85rem;
             color: #64748b;
         }
-        .btn-nav:hover { background: #f1f5f9; }
-        .counter { font-size: 0.9rem; color: #64748b; font-weight: 700; }
+        .counter { font-size: 0.85rem; color: #64748b; font-weight: 700; }
 
         .status-badge {
             position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
-            padding: 0.3rem 0.75rem;
-            border-radius: 2rem;
-            font-size: 0.75rem;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.7rem;
             font-weight: 700;
         }
         .status-done { background: #dcfce7; color: #166534; }
@@ -170,17 +182,33 @@
 
         @keyframes slideNext {
             from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(-60px); opacity: 0; }
+            to { transform: translateX(-50px); opacity: 0; }
         }
         .sliding { animation: slideNext 0.15s forwards; }
 
-        .reset-btn { font-size: 0.7rem; color: #cbd5e1; cursor: pointer; margin-top: 2rem; text-decoration: underline; }
+        .reset-btn { font-size: 0.7rem; color: #cbd5e1; cursor: pointer; margin-top: 1rem; text-decoration: underline; }
+        
+        .audio-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Welcome Overlay to solve Audio Block issue -->
+    <div id="welcome-overlay">
+        <h2>Dr. Takano-English</h2>
+        <p>単語帳アプリを起動します。<br>※起動時に音声を許可します。</p>
+        <button class="btn btn-start" onclick="startApp()">学習を始める</button>
+    </div>
+
     <h1>Word Master</h1>
-    <p class="subtitle">高野先生専用：単語学習アプリ</p>
+    <p class="subtitle">高野先生専用：英単語アプリ</p>
 
     <div class="header-controls">
         <div class="stats">
@@ -206,7 +234,7 @@
             <div class="card-face card-front">
                 <div id="status-badge" class="status-badge"></div>
                 <div id="front-en" class="word-en">Loading...</div>
-                <div style="font-size: 1.8rem;">🔊</div>
+                <div class="audio-btn">🔊</div>
             </div>
             <div class="card-face card-back">
                 <div id="back-pos" class="word-pos">品詞</div>
@@ -218,14 +246,8 @@
 
     <!-- Learning Buttons -->
     <div class="action-btns">
-        <button class="btn-learn btn-yet" onclick="markAs('yet')">
-            まだ ❌
-            <span>要復習リストへ</span>
-        </button>
-        <button class="btn-learn btn-done" onclick="markAs('done')">
-            覚えた！ ✅
-            <span>習得済みリストへ</span>
-        </button>
+        <button class="btn btn-yet" onclick="markAs('yet')">まだ ❌</button>
+        <button class="btn btn-done" onclick="markAs('done')">覚えた！ ✅</button>
     </div>
 
     <!-- Nav -->
@@ -233,13 +255,12 @@
         <button class="btn-nav" onclick="prevCard()">前へ</button>
         <div id="counter" class="counter">0 / 0</div>
         <button class="btn-nav" onclick="nextCard()">次へ</button>
-        <button class="btn-nav" onclick="shuffleCards()" title="シャッフル">🔀</button>
+        <button class="btn-nav" onclick="shuffleCards()">🔀</button>
     </div>
 
-    <div class="reset-btn" onclick="resetProgress()">習得記録をリセットする</div>
+    <div class="reset-btn" onclick="resetProgress()">習得記録をリセット</div>
 
     <script>
-        // Data managed by teacher
         const masterData = `施術フレーズ	insert	挿入する、刺す	動	Can I insert needles?
 施術フレーズ	needles	鍼、針	名	Can I insert needles?
 施術フレーズ	tension	緊張、筋肉の張り	名	Release the tension.
@@ -382,6 +403,20 @@
         let progress = {};
         let currentIndex = 0;
         const synth = window.speechSynthesis;
+        let audioEnabled = false;
+
+        function startApp() {
+            // Unblock audio by playing empty sound
+            const utterance = new SpeechSynthesisUtterance("");
+            synth.speak(utterance);
+            audioEnabled = true;
+            
+            document.getElementById('welcome-overlay').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('welcome-overlay').style.display = 'none';
+                showCard(); // Play first card sound
+            }, 500);
+        }
 
         function init() {
             const savedProgress = localStorage.getItem('takano_word_progress');
@@ -401,7 +436,6 @@
                     phrase: (cols[4] || '').trim()
                 };
             }).filter(w => w.en && !w.en.includes('カテゴリー'));
-
             updateCategoryFilter();
             filterWords();
         }
@@ -421,18 +455,14 @@
         function filterWords() {
             const mode = document.getElementById('view-mode').value;
             const cat = document.getElementById('category-filter').value;
-
             displayWords = allWords.filter(w => {
                 const isCatMatch = (cat === 'all' || w.cat === cat);
                 const status = progress[w.en] || 'uncheck';
-                
                 let isModeMatch = true;
                 if (mode === 'unlearned') isModeMatch = (status !== 'done');
                 if (mode === 'learned') isModeMatch = (status === 'done');
-                
                 return isCatMatch && isModeMatch;
             });
-
             currentIndex = 0;
             updateStats();
             showCard();
@@ -441,10 +471,7 @@
         function updateStats() {
             const total = allWords.length;
             let actualDone = 0;
-            allWords.forEach(w => {
-                if (progress[w.en] === 'done') actualDone++;
-            });
-
+            allWords.forEach(w => { if (progress[w.en] === 'done') actualDone++; });
             document.getElementById('total-stat').textContent = total;
             document.getElementById('done-stat').textContent = actualDone;
             document.getElementById('yet-stat').textContent = total - actualDone;
@@ -453,14 +480,11 @@
         function showCard() {
             const card = document.getElementById('card');
             card.classList.remove('flipped', 'sliding');
-            
             if (displayWords.length === 0) {
                 document.getElementById('front-en').textContent = "該当なし";
                 document.getElementById('counter').textContent = "0 / 0";
-                document.getElementById('status-badge').textContent = "";
                 return;
             }
-
             const w = displayWords[currentIndex];
             document.getElementById('front-en').textContent = w.en;
             document.getElementById('back-jp').textContent = w.jp;
@@ -468,7 +492,6 @@
             document.getElementById('back-phrase').textContent = w.phrase || '';
             document.getElementById('counter').textContent = `${currentIndex + 1} / ${displayWords.length}`;
             
-            // Badge
             const status = progress[w.en];
             const badge = document.getElementById('status-badge');
             if (status === 'done') {
@@ -480,48 +503,27 @@
             } else {
                 badge.textContent = "";
             }
-
-            speak(w.en);
+            if (audioEnabled) speak(w.en);
         }
 
         function markAs(status) {
             if (displayWords.length === 0) return;
-            const word = displayWords[currentIndex].en;
-            progress[word] = status;
+            progress[displayWords[currentIndex].en] = status;
             localStorage.setItem('takano_word_progress', JSON.stringify(progress));
-            
             updateStats();
-            
             const cardTrigger = document.getElementById('card-trigger');
             cardTrigger.classList.add('sliding');
-            
             setTimeout(() => {
                 const mode = document.getElementById('view-mode').value;
-                if (mode === 'unlearned' && status === 'done') {
-                    filterWords(); 
-                } else {
-                    nextCard();
-                }
+                if (mode === 'unlearned' && status === 'done') filterWords(); 
+                else nextCard();
                 cardTrigger.classList.remove('sliding');
             }, 150);
         }
 
-        function flipCard() {
-            document.getElementById('card').classList.toggle('flipped');
-        }
-
-        function nextCard() {
-            if (displayWords.length <= 1) return;
-            currentIndex = (currentIndex + 1) % displayWords.length;
-            showCard();
-        }
-
-        function prevCard() {
-            if (displayWords.length <= 1) return;
-            currentIndex = (currentIndex - 1 + displayWords.length) % displayWords.length;
-            showCard();
-        }
-
+        function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
+        function nextCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex + 1) % displayWords.length; showCard(); }
+        function prevCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex - 1 + displayWords.length) % displayWords.length; showCard(); }
         function shuffleCards() {
             for (let i = displayWords.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
