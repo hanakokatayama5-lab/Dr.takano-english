@@ -24,158 +24,109 @@
             font-family: 'Outfit', 'Noto Sans JP', sans-serif;
             background-color: var(--bg);
             color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1rem;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding: 1rem;
         }
 
         h1 { margin-bottom: 0.2rem; color: var(--primary); font-size: 1.5rem; }
         .subtitle { margin-bottom: 1rem; color: #64748b; font-size: 0.8rem; }
 
-        /* Welcome Overlay */
         #welcome-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(37, 99, 235, 0.95);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 2rem;
-            text-align: center;
-            transition: opacity 0.5s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(37, 99, 235, 0.98); color: white;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1000; padding: 2rem; text-align: center; transition: opacity 0.5s ease;
         }
-        #welcome-overlay h2 { margin-bottom: 1rem; }
-        #welcome-overlay p { margin-bottom: 2rem; opacity: 0.9; font-size: 0.9rem; }
 
-        /* Stats & Filters */
         .header-controls {
-            width: 100%;
-            max-width: 450px;
-            background: white;
-            padding: 1rem;
-            border-radius: 1.25rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            margin-bottom: 1rem;
+            width: 100%; max-width: 450px; background: white; padding: 1rem;
+            border-radius: 1.25rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 1rem;
         }
 
         .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 0.75rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 0.75rem;
+            display: flex; justify-content: space-around; margin-bottom: 0.75rem;
+            font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;
         }
-        .stat-item { text-align: center; }
         .stat-val { display: block; font-size: 1.2rem; color: var(--primary); }
         .stat-val.done { color: var(--success); }
 
         .filters { display: flex; gap: 0.5rem; flex-direction: column; }
         select { 
-            padding: 0.5rem; 
-            border-radius: 0.5rem; 
-            border: 1px solid #e2e8f0; 
-            font-size: 0.85rem; 
-            background-color: #f8fafc;
-            font-family: inherit;
+            padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; 
+            font-size: 0.85rem; background-color: #f8fafc; font-family: inherit;
         }
 
         /* Card Container */
         .card-container {
-            perspective: 1000px;
-            width: 100%;
-            max-width: 400px;
-            height: 280px;
-            cursor: pointer;
-            margin-bottom: 1.5rem;
+            perspective: 1000px; width: 100%; max-width: 400px; height: 280px;
+            margin-bottom: 1.5rem; position: relative;
         }
 
         .card {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-            border-radius: 1.5rem;
+            position: relative; width: 100%; height: 100%; transition: transform 0.6s;
+            transform-style: preserve-3d; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); border-radius: 1.5rem;
+            cursor: pointer;
         }
-
         .card.flipped { transform: rotateY(180deg); }
-
         .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            border-radius: 1.5rem;
-            border: 2px solid #fff;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 1.5rem; border-radius: 1.5rem; border: 2px solid #fff;
         }
-
         .card-front { background-color: var(--card-front); }
         .card-back { background-color: var(--card-back); transform: rotateY(180deg); }
 
-        .word-en { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; text-align: center; line-height: 1.1; }
+        .word-en { font-size: 2.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; text-align: center; }
         .word-jp { font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-align: center; }
         .word-pos { font-size: 0.75rem; color: #64748b; background: #e2e8f0; padding: 0.2rem 0.5rem; border-radius: 0.3rem; margin-bottom: 0.5rem; }
         .phrase { font-size: 0.85rem; color: #475569; font-style: italic; margin-top: 1rem; line-height: 1.4; text-align: center; }
 
-        /* Learning Buttons */
+        /* Speaker Button overlay */
+        .speaker-btn {
+            position: absolute; bottom: 1rem; right: 1rem; z-index: 10;
+            background: rgba(255,255,255,0.8); border: 1px solid #ddd;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .speaker-btn:hover { background: white; transform: scale(1.1); color: var(--primary); }
+        .speaker-btn:active { transform: scale(0.9); }
+
         .action-btns {
-            display: flex;
-            gap: 1rem;
-            width: 100%;
-            max-width: 400px;
-            margin-bottom: 1rem;
+            display: flex; gap: 1rem; width: 100%; max-width: 400px; margin-bottom: 1rem;
         }
-
         .btn {
-            padding: 1rem;
-            border-radius: 1rem;
-            border: none;
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: inherit;
+            padding: 1rem; border-radius: 1rem; border: none; color: white;
+            font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: inherit;
         }
-        .btn:active { transform: scale(0.95); }
-
         .btn-start { background: white; color: var(--primary); padding: 1rem 2.5rem; font-size: 1.1rem; }
         .btn-done { background: var(--success); flex: 1; }
         .btn-yet { background: var(--danger); flex: 1; }
 
-        /* Navigation Controls */
+        /* Autoplay Active Bar */
+        .autoplay-bar {
+            width: 100%; max-width: 400px; background: #fee2e2; border: 1px solid #fca5a5;
+            padding: 0.75rem; border-radius: 1rem; margin-bottom: 1rem; display: none;
+            justify-content: space-between; align-items: center;
+        }
+        .btn-stop { background: var(--danger); padding: 0.4rem 1rem; font-size: 0.8rem; border-radius: 0.5rem; }
+
+        .autoplay-controls {
+            display: flex; gap: 0.5rem; width: 100%; max-width: 400px; margin-bottom: 1rem;
+        }
+        .btn-auto { background: var(--accent); flex: 1; color: var(--text-main); font-size: 0.9rem; }
+
         .nav-controls { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
         .btn-nav { 
-            padding: 0.5rem 1rem; 
-            border-radius: 0.5rem; 
-            border: 1px solid #e2e8f0; 
-            background: white; 
-            cursor: pointer; 
-            font-size: 0.85rem;
-            color: #64748b;
+            padding: 0.5rem 1rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; 
+            background: white; cursor: pointer; font-size: 0.85rem; color: #64748b;
         }
         .counter { font-size: 0.85rem; color: #64748b; font-weight: 700; }
 
         .status-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 1rem;
-            font-size: 0.7rem;
-            font-weight: 700;
+            position: absolute; top: 1rem; right: 1rem; padding: 0.2rem 0.6rem;
+            border-radius: 1rem; font-size: 0.7rem; font-weight: 700;
         }
         .status-done { background: #dcfce7; color: #166534; }
         .status-yet { background: #fee2e2; color: #991b1b; }
@@ -185,30 +136,24 @@
             to { transform: translateX(-50px); opacity: 0; }
         }
         .sliding { animation: slideNext 0.15s forwards; }
-
         .reset-btn { font-size: 0.7rem; color: #cbd5e1; cursor: pointer; margin-top: 1rem; text-decoration: underline; }
-        
-        .audio-btn {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            color: var(--primary);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Welcome Overlay to solve Audio Block issue -->
     <div id="welcome-overlay">
         <h2>Dr. Takano-English</h2>
-        <p>単語帳アプリを起動します。<br>※起動時に音声を許可します。</p>
+        <p>聞き流し機能付き単語帳アプリ<br>※ボタンを押して開始します</p>
         <button class="btn btn-start" onclick="startApp()">学習を始める</button>
     </div>
 
     <h1>Word Master</h1>
     <p class="subtitle">高野先生専用：英単語アプリ</p>
+
+    <div id="autoplay-bar" class="autoplay-bar">
+        <span style="font-size: 0.85rem; font-weight: 700; color: #991b1b;">🔊 聞き流し再生中...</span>
+        <button class="btn-stop" onclick="stopAutoplay()" style="color:white; border:none; cursor:pointer">停止</button>
+    </div>
 
     <div class="header-controls">
         <div class="stats">
@@ -230,11 +175,14 @@
 
     <!-- Card Area -->
     <div class="card-container" id="card-trigger">
+        <!-- Speaker Icon (Manual Only) -->
+        <div class="speaker-btn" onclick="manualSpeak(event)" title="音声を再生">🔊</div>
+        
         <div id="card" class="card" onclick="flipCard()">
             <div class="card-face card-front">
                 <div id="status-badge" class="status-badge"></div>
                 <div id="front-en" class="word-en">Loading...</div>
-                <div class="audio-btn">🔊</div>
+                <div style="font-size: 1.2rem; color: #cbd5e1;">Tap to Flip</div>
             </div>
             <div class="card-face card-back">
                 <div id="back-pos" class="word-pos">品詞</div>
@@ -244,13 +192,17 @@
         </div>
     </div>
 
-    <!-- Learning Buttons -->
+    <div class="autoplay-controls">
+        <button class="btn btn-auto" id="btn-autoplay" onclick="startAutoplay()">
+            🎧 連続再生（聞き流し）を開始
+        </button>
+    </div>
+
     <div class="action-btns">
         <button class="btn btn-yet" onclick="markAs('yet')">まだ ❌</button>
         <button class="btn btn-done" onclick="markAs('done')">覚えた！ ✅</button>
     </div>
 
-    <!-- Nav -->
     <div class="nav-controls">
         <button class="btn-nav" onclick="prevCard()">前へ</button>
         <div id="counter" class="counter">0 / 0</div>
@@ -398,29 +350,20 @@
 26 仕事	have nothing to complain about	文句を言うことが何もない	句	I have nothing to complain about.
 26 仕事	finally	最後に	副	Finally, the rain stopped.`;
 
-        let allWords = [];
-        let displayWords = [];
-        let progress = {};
-        let currentIndex = 0;
+        let allWords = []; let displayWords = []; let progress = {}; let currentIndex = 0;
         const synth = window.speechSynthesis;
-        let audioEnabled = false;
+        let isAutoplay = false; let audioEnabled = false;
 
         function startApp() {
-            // Unblock audio by playing empty sound
-            const utterance = new SpeechSynthesisUtterance("");
-            synth.speak(utterance);
+            synth.speak(new SpeechSynthesisUtterance(""));
             audioEnabled = true;
-            
             document.getElementById('welcome-overlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('welcome-overlay').style.display = 'none';
-                showCard(); // Play first card sound
-            }, 500);
+            setTimeout(() => { document.getElementById('welcome-overlay').style.display = 'none'; showCard(); }, 500);
         }
 
         function init() {
-            const savedProgress = localStorage.getItem('takano_word_progress');
-            if (savedProgress) progress = JSON.parse(savedProgress);
+            const saved = localStorage.getItem('takano_word_progress');
+            if (saved) progress = JSON.parse(saved);
             processData(masterData);
         }
 
@@ -428,53 +371,38 @@
             const lines = text.split('\n');
             allWords = lines.map(line => {
                 const cols = line.split('\t');
-                return {
-                    cat: cols[0] || 'Unknown',
-                    en: (cols[1] || '').trim(),
-                    jp: (cols[2] || '').trim(),
-                    pos: (cols[3] || '').trim(),
-                    phrase: (cols[4] || '').trim()
-                };
+                return { cat: cols[0], en: (cols[1]||'').trim(), jp: (cols[2]||'').trim(), pos: (cols[3]||'').trim(), phrase: (cols[4]||'').trim() };
             }).filter(w => w.en && !w.en.includes('カテゴリー'));
-            updateCategoryFilter();
-            filterWords();
+            updateCategoryFilter(); filterWords();
         }
 
         function updateCategoryFilter() {
             const select = document.getElementById('category-filter');
             const cats = [...new Set(allWords.map(w => w.cat))];
             select.innerHTML = '<option value="all">すべてのカテゴリー</option>';
-            cats.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c;
-                opt.textContent = c;
-                select.appendChild(opt);
-            });
+            cats.forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.textContent = c; select.appendChild(opt); });
         }
 
         function filterWords() {
             const mode = document.getElementById('view-mode').value;
             const cat = document.getElementById('category-filter').value;
             displayWords = allWords.filter(w => {
-                const isCatMatch = (cat === 'all' || w.cat === cat);
+                const isCat = (cat === 'all' || w.cat === cat);
                 const status = progress[w.en] || 'uncheck';
-                let isModeMatch = true;
-                if (mode === 'unlearned') isModeMatch = (status !== 'done');
-                if (mode === 'learned') isModeMatch = (status === 'done');
-                return isCatMatch && isModeMatch;
+                let isMode = true;
+                if (mode === 'unlearned') isMode = (status !== 'done');
+                if (mode === 'learned') isMode = (status === 'done');
+                return isCat && isMode;
             });
-            currentIndex = 0;
-            updateStats();
-            showCard();
+            currentIndex = 0; updateStats(); showCard();
         }
 
         function updateStats() {
             const total = allWords.length;
-            let actualDone = 0;
-            allWords.forEach(w => { if (progress[w.en] === 'done') actualDone++; });
+            let done = 0; allWords.forEach(w => { if (progress[w.en] === 'done') done++; });
             document.getElementById('total-stat').textContent = total;
-            document.getElementById('done-stat').textContent = actualDone;
-            document.getElementById('yet-stat').textContent = total - actualDone;
+            document.getElementById('done-stat').textContent = done;
+            document.getElementById('yet-stat').textContent = total - done;
         }
 
         function showCard() {
@@ -492,18 +420,71 @@
             document.getElementById('back-phrase').textContent = w.phrase || '';
             document.getElementById('counter').textContent = `${currentIndex + 1} / ${displayWords.length}`;
             
-            const status = progress[w.en];
             const badge = document.getElementById('status-badge');
-            if (status === 'done') {
-                badge.textContent = "習得済み ✅";
-                badge.className = "status-badge status-done";
-            } else if (status === 'yet') {
-                badge.textContent = "要復習 ❌";
-                badge.className = "status-badge status-yet";
+            const status = progress[w.en];
+            if (status === 'done') { badge.textContent = "習得済み ✅"; badge.className = "status-badge status-done"; }
+            else if (status === 'yet') { badge.textContent = "要復習 ❌"; badge.className = "status-badge status-yet"; }
+            else { badge.textContent = ""; }
+            
+            // Auto-speak ONLY in Autoplay mode.
+        }
+
+        function manualSpeak(event) {
+            if (event) event.stopPropagation(); // Don't flip card when clicking speaker
+            if (!audioEnabled || displayWords.length === 0) return;
+            const w = displayWords[currentIndex];
+            const isFlipped = document.getElementById('card').classList.contains('flipped');
+            
+            if (!isFlipped) {
+                speak(w.en, 'en-US');
             } else {
-                badge.textContent = "";
+                speak(w.jp, 'ja-JP');
             }
-            if (audioEnabled) speak(w.en);
+        }
+
+        // --- Autoplay ---
+        function startAutoplay() {
+            if (displayWords.length === 0) return;
+            isAutoplay = true;
+            document.getElementById('autoplay-bar').style.display = 'flex';
+            document.getElementById('btn-autoplay').style.opacity = '0.5';
+            playSequence();
+        }
+
+        function stopAutoplay() {
+            isAutoplay = false; synth.cancel();
+            document.getElementById('autoplay-bar').style.display = 'none';
+            document.getElementById('btn-autoplay').style.opacity = '1';
+        }
+
+        async function playSequence() {
+            if (!isAutoplay) return;
+            const w = displayWords[currentIndex];
+            document.getElementById('card').classList.remove('flipped');
+            await speakAsync(w.en, 'en-US'); await sleep(1000);
+            if (!isAutoplay) return;
+            document.getElementById('card').classList.add('flipped');
+            await speakAsync(w.jp, 'ja-JP'); await sleep(1000);
+            if (!isAutoplay) return;
+            if (w.phrase) { await speakAsync(w.phrase, 'en-US'); await sleep(2000); }
+            if (!isAutoplay) return;
+            if (currentIndex < displayWords.length - 1) { currentIndex++; showCard(); playSequence(); }
+            else { stopAutoplay(); alert("完了！"); }
+        }
+
+        function speakAsync(text, lang) {
+            return new Promise((resolve) => {
+                synth.cancel();
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = lang; u.rate = 0.9; u.onend = resolve;
+                synth.speak(u);
+            });
+        }
+        function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+        function speak(text, lang) {
+            synth.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = lang; u.rate = 0.9; synth.speak(u);
         }
 
         function markAs(status) {
@@ -511,44 +492,24 @@
             progress[displayWords[currentIndex].en] = status;
             localStorage.setItem('takano_word_progress', JSON.stringify(progress));
             updateStats();
-            const cardTrigger = document.getElementById('card-trigger');
-            cardTrigger.classList.add('sliding');
+            const trigger = document.getElementById('card-trigger');
+            trigger.classList.add('sliding');
             setTimeout(() => {
                 const mode = document.getElementById('view-mode').value;
-                if (mode === 'unlearned' && status === 'done') filterWords(); 
-                else nextCard();
-                cardTrigger.classList.remove('sliding');
+                if (mode === 'unlearned' && status === 'done') filterWords(); else nextCard();
+                trigger.classList.remove('sliding');
             }, 150);
         }
-
         function flipCard() { document.getElementById('card').classList.toggle('flipped'); }
         function nextCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex + 1) % displayWords.length; showCard(); }
         function prevCard() { if (displayWords.length <= 1) return; currentIndex = (currentIndex - 1 + displayWords.length) % displayWords.length; showCard(); }
         function shuffleCards() {
             for (let i = displayWords.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [displayWords[i], displayWords[j]] = [displayWords[j], displayWords[i]];
+                const j = Math.floor(Math.random() * (i + 1)); [displayWords[i], displayWords[j]] = [displayWords[j], displayWords[i]];
             }
-            currentIndex = 0;
-            showCard();
+            currentIndex = 0; showCard();
         }
-
-        function resetProgress() {
-            if (confirm("全ての学習記録をリセットしますか？")) {
-                progress = {};
-                localStorage.removeItem('takano_word_progress');
-                updateStats();
-                filterWords();
-            }
-        }
-
-        function speak(text) {
-            synth.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.9;
-            synth.speak(utterance);
-        }
+        function resetProgress() { if (confirm("リセットしますか？")) { progress = {}; localStorage.removeItem('takano_word_progress'); updateStats(); filterWords(); } }
 
         init();
     </script>
